@@ -1,5 +1,6 @@
 from rest_framework import filters, permissions, viewsets
 
+from .permissions import ClosedCatalog
 from .models import Author, Book
 from .serializers import AuthorSerializer, BookSerializer
 
@@ -14,6 +15,7 @@ class AuthorViewSet(viewsets.ReadOnlyModelViewSet):
 
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
+    permission_classes = [ClosedCatalog]
     serializer_class = BookSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ["title", "author__name"]
